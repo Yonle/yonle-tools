@@ -9,4 +9,4 @@ while read dir; do
   if [ -d "$dir" ] && [ -z "`ls -A "$dir"`" ]; then
     rm -rvf "$dir"
   fi
-done<<<`find $@ -type d | sort -r`
+done<<<`find $@ -type d -depth`
