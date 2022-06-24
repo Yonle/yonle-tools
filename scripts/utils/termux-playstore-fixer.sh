@@ -10,12 +10,13 @@ ready() {
 
   echo -e "\nYou're now ready to go."
   echo "Please execute the following command to relogin:"
-  echo "  $ exec login"
+  echo -e "  $ exec login\n"
   exit 0
 }
 
 patch_login() {
-  cat <<-EOM | patch -R -p1 /data/data/com.termux/files/usr/bin/login
+  echo -n "Patching login... "
+  cat <<-EOM | patch --silent -p1 /data/data/com.termux/files/usr/bin/login
 diff -uNr /data/data/com.termux/files/usr/bin/login /data/data/com.termux/files/usr/bin/login.mod
 --- /data/data/com.termux/files/usr/bin/login	2022-06-24 22:26:58.921000163 +0700
 +++ /data/data/com.termux/files/usr/bin/login.mod	2022-06-25 00:16:31.345000555 +0700
@@ -33,7 +34,7 @@ diff -uNr /data/data/com.termux/files/usr/bin/login /data/data/com.termux/files/
  else
 EOM
   if [ "$?" = "0" ]; then
-    echo "Succesfully Patched."
+    echo "Done"
     ready
   fi
 }
